@@ -14,7 +14,7 @@ export class RecipeService {
   }
 
   submit(dish: string): Observable<any> {
-    return this.http.get<any>(this.url + 'submit/' + dish).pipe(
+    return this.http.get<any>(this.url + 'recipe/' + dish).pipe(
       map((response) => {
         this.recipe = response;
         return response;

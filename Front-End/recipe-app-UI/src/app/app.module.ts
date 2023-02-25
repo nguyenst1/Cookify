@@ -10,10 +10,24 @@ import { InstructionComponent } from './instruction/instruction.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { IngredientsComponent } from './ingredients/ingredients.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, MainPageComponent, LoadingComponent, InstructionComponent, IngredientsComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, MaterialModule],
+  declarations: [
+    AppComponent,
+    MainPageComponent,
+    LoadingComponent,
+    InstructionComponent,
+    IngredientsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
