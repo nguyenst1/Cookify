@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.apache.http.ParseException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -32,6 +33,7 @@ public class ApiHandler {
         CHATGPTAPIKEY
     }
     public enum PATH{
+        IMAGE_GENERATION("/v1/images/generations"),
         COMPLETIONS("/v1/completions");
 
         private String path;
@@ -127,12 +129,17 @@ public class ApiHandler {
         //Body Part
         httpPost.setEntity(new StringEntity(body.toString()));
 
+        //Timeout Part
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectionTimeOut).setSocketTimeout(socketTimeOut).build();
+        httpPost.setConfig(requestConfig);
+
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(httpPost)) {
 
             result = EntityUtils.toString(response.getEntity());
         }
 
+        clear();
         return result;
     }
 
@@ -153,6 +160,10 @@ public class ApiHandler {
         for(String key : params.keySet()){
             uriBuilder.addParameter(key, params.getString(key));
         }
+        
+        //Timeout Part
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectionTimeOut).setSocketTimeout(socketTimeOut).build();
+        httpGet.setConfig(requestConfig);
 
         httpGet.setURI(uriBuilder.build());
 
@@ -162,6 +173,7 @@ public class ApiHandler {
             result = EntityUtils.toString(response.getEntity());
         }
 
+        clear();
         return result;
     }
 
@@ -185,6 +197,10 @@ public class ApiHandler {
 
         //Body Part
         httpPut.setEntity(new StringEntity(body.toString()));
+        
+        //Timeout Part
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectionTimeOut).setSocketTimeout(socketTimeOut).build();
+        httpPut.setConfig(requestConfig);
 
         httpPut.setURI(uriBuilder.build());
 
@@ -194,6 +210,7 @@ public class ApiHandler {
             result = EntityUtils.toString(response.getEntity());
         }
 
+        clear();
         return result;
     }
 
@@ -215,6 +232,10 @@ public class ApiHandler {
             uriBuilder.addParameter(key, params.getString(key));
         }
 
+        //Timeout Part
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectionTimeOut).setSocketTimeout(socketTimeOut).build();
+        httpDelete.setConfig(requestConfig);
+
         httpDelete.setURI(uriBuilder.build());
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -223,6 +244,7 @@ public class ApiHandler {
             result = EntityUtils.toString(response.getEntity());
         }
 
+        clear();
         return result;
     }
     
@@ -247,5 +269,14 @@ public class ApiHandler {
             headers.put("Authorization", "Bearer " + (apiKeyType == APIKEYTYPE.CHATGPTAPIKEY ? chatGptApiKey : chatGptApiKey));
         }
     }
-    
+
+    private void clear(){
+        params = null;
+        headers = null;
+        body = null;
+        path = null;
+        apiKeyType = null;
+        socketTimeOut = 5000;
+        connectionTimeOut = 5000;
+    }
 }
