@@ -26,4 +26,9 @@ public class RecipeController {
     public ResponseEntity<String> getRecipe(@RequestParam("food_item") String foodItem) throws Exception {
        return new ResponseEntity<>(recipeOps.getRecipe(foodItem).toString(), HttpStatus.OK);    
     }
+
+    @GetMapping("/recipe/instruction/image")
+    public ResponseEntity<String> getRecipeImage(@RequestParam("food_instruction") String foodInstruction) throws Exception {
+        return new ResponseEntity<>(recipeOps.getImage(foodInstruction).toString(), HttpStatus.OK);    
+     }
 }

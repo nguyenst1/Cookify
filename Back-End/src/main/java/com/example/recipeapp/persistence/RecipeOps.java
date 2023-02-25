@@ -39,7 +39,7 @@ public class RecipeOps {
         return responseObj;
     }
 
-    public String getImage(String searchQuery) throws Exception{
+    public JSONObject getImage(String searchQuery) throws Exception{
         JSONObject body = new JSONObject();
         body.put("size", "512x512");
         body.put("prompt", searchQuery);
@@ -50,7 +50,7 @@ public class RecipeOps {
         LOG.info("Image Response is -- " + response);
         JSONArray data =  new JSONObject(response).getJSONArray("data");
         LOG.info("Image data is -- " + data);
-        return data.getJSONObject(0).getString("url");
+        return new JSONObject().put("url", data.getJSONObject(0).getString("url"));
     }
 
     private JSONObject manipulateRecipe(String response){
@@ -76,8 +76,7 @@ public class RecipeOps {
                     continue;
                 }
                 if(isInstructionFound){
-                    String instruction = getStepValue(responseData).trim();
-                    instructions.add(new JSONObject().put("value", instruction).put("image_url", getImage(instruction)));
+                    instructions.add(new JSONObject().put("value", getStepValue(responseData).trim()));
                 }else{
                     ingredients.add(new JSONObject().put("value", getStepValue(responseData).trim()));
                 }
