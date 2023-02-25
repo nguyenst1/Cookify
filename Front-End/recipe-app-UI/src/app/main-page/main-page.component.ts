@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
-import { recipe } from '../recipe';
+import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { RecipeService } from '../recipe.service';
 })
 export class MainPageComponent implements OnInit {
   dish: string = '';
-  recipe: recipe;
+  recipe: Recipe;
   appComponent: typeof AppComponent;
 
   constructor(private recipeservice: RecipeService, private router: Router) {
@@ -22,8 +22,7 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {}
   submit() {
     this.recipeservice.submit(this.dish).subscribe({
-      next: (recipe) => {
-        localStorage.setItem('recipe', recipe);
+      next: (recipe: Recipe) => {
         this.router.navigate(['ingredients']).then(() => {
           window.location.reload();
         });
