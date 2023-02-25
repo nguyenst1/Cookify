@@ -29,4 +29,8 @@ export class MainPageComponent implements OnInit {
     //   },
     // });
   }
+  submitManual(data: string){
+    this.dish = data;
+    this.submit();
+  }
 }
