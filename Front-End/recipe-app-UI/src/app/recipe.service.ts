@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Recipe } from './recipe';
@@ -13,8 +13,15 @@ export class RecipeService {
     this.recipe = {};
   }
 
+  public getHeaders(): any {
+    return new HttpHeaders({
+      "Access-Control-Allow-Origin": "http://localhost:4200"
+      
+    });
+  }
+
   submit(dish: string): Observable<any> {
-    return this.http.get<any>(this.url + 'recipe/' + dish).pipe(
+    return this.http.get<any>(this.url + 'recipe' + "?&food_item=" + dish, { headers: this.getHeaders() }).pipe(
       map((response) => {
         this.recipe = response;
         return response;
