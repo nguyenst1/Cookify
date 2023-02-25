@@ -23,8 +23,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe")
-    public ResponseEntity<JSONObject> getRecipe(@RequestParam("food_item") String foodItem) throws Exception {
-        JSONObject response  = new JSONObject().put("response", recipeOps.getRecipe(foodItem));
-       return new ResponseEntity<>(response, HttpStatus.OK);    
+    public ResponseEntity<String> getRecipe(@RequestParam("food_item") String foodItem) throws Exception {
+       return new ResponseEntity<>(recipeOps.getRecipe(foodItem).toString(), HttpStatus.OK);    
     }
 }
