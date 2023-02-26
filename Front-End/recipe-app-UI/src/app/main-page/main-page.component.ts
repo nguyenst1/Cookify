@@ -25,8 +25,11 @@ export class MainPageComponent implements OnInit {
   isApiHit: boolean = false;
   isRecipeValid: boolean = true;
   userName: String = "";
-  @ViewChild(InstructionComponent, { static: true })
-  instructionComp!: InstructionComponent;
+  instructionComp:any;
+  @ViewChild(InstructionComponent)
+  set setInstructionComp(instructionComp: InstructionComponent) {
+    this.instructionComp = instructionComp;
+  };
 
   constructor(
     private recipeservice: RecipeService,
@@ -58,7 +61,7 @@ export class MainPageComponent implements OnInit {
         this.displayRecipe = true;
         this.isApiHit = false;
         this.recipeservice.recipe = recipe;
-        //this.instructionComp.getRecipe();
+        this.instructionComp.getRecipe();
       },
       error: (err: any) => {
         if (
