@@ -12,25 +12,24 @@ import { RecipeService } from '../recipe.service';
 export class MainPageComponent implements OnInit {
   dish: string = '';
   recipe: Recipe;
+  isNotSearched: boolean;
   appComponent: typeof AppComponent;
 
   constructor(private recipeservice: RecipeService, private router: Router) {
     this.appComponent = AppComponent;
     this.recipe = {};
+    this.isNotSearched = true;
   }
 
   ngOnInit(): void {}
   submit() {
+    this.isNotSearched = false;
     this.recipeservice.submit(this.dish).subscribe({
       next: (recipe: Recipe) => {
-        this.router.navigate(['ingredients']).then(() => {
-          window.location.reload();
-        });
+        // this.router.navigate(['ingredients']).then(() => {
+        //   window.location.reload();
+        // });
       },
     });
-  }
-  submitManual(data: string){
-    this.dish = data;
-    this.submit();
   }
 }

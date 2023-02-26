@@ -16,7 +16,7 @@ export class RecipeService {
   public getHeaders(): any {
     return new HttpHeaders({
       "Access-Control-Allow-Origin": "http://localhost:4200"
-      
+
     });
   }
 

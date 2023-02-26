@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DailyRecipesComponent } from './daily-recipes/daily-recipes.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoadingComponent,
     InstructionComponent,
     IngredientsComponent,
+    DailyRecipesComponent,
   ],
   imports: [
     BrowserModule,
