@@ -1,6 +1,8 @@
 <body>
   <h1 class="cookify_title">Cookify</h1>
-  <p>An AI-powered recipe generator with ChatGPT and Dall-E</p>
+  <p>
+    An AI recipes generator powered by ChatGPT and Dall-E
+  </p>
 
   <div class="search-container">
     <input type="text" [(ngModel)]="dish" required />
@@ -8,7 +10,7 @@
   </div>
 
   <div class="recipe-of-day">
-    <h1>Recipe of the day:</h1>
+    <h1>Recipes of the day:</h1>
     <mat-card>
       <mat-card-content class="recipe-of-day">
         <img src="./assets/chickenpam.webp" style="width: 300px; height: 200px;" (click)="submitManual('chicken parmesans')">
