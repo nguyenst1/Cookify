@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { RecipeHttp } from '../recipeHttp';
 
 @Component({
   selector: 'app-main-page',
@@ -13,19 +14,21 @@ export class MainPageComponent implements OnInit {
   dish: string = '';
   recipe: Recipe;
   appComponent: typeof AppComponent;
+  isApiHit: Boolean = false;
+  url: any;
 
-  constructor(private recipeservice: RecipeService, private router: Router) {
+  constructor(private recipeservice: RecipeService, private recipeHttpService: RecipeHttp, private router: Router) {
     this.appComponent = AppComponent;
     this.recipe = {};
   }
 
   ngOnInit(): void {}
   submit() {
-    this.recipeservice.submit(this.dish).subscribe({
+    this.isApiHit = true;
+    this.recipeHttpService.submit(this.dish).subscribe({
       next: (recipe: Recipe) => {
-        this.router.navigate(['ingredients']).then(() => {
-          window.location.reload();
-        });
+        this.recipeservice.recipe = recipe;
+        this.recipeservice.getNextInstructionImageUrl();
       },
     });
   }

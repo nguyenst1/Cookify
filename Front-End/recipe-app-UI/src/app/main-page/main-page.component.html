@@ -6,7 +6,12 @@
 
   <div class="search-container">
     <input type="text" [(ngModel)]="dish" required />
-    <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
+    <ng-template [ngIf]="!isApiHit">
+      <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
+      </ng-template>
+      <ng-template [ngIf]="isApiHit">
+      <mat-spinner [diameter]="35"></mat-spinner>
+      </ng-template>
   </div>
 
   <div class="recipe-of-day">

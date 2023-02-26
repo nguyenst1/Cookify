@@ -1,4 +1,4 @@
 export interface Recipe {
-  ingredients?: string[];
-  instructions?: string[];
+  ingredients?: String[];
+  instructions?: String[];
 }
