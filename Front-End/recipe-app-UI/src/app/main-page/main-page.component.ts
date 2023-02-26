@@ -12,6 +12,7 @@ import { RecipeService } from '../recipe.service';
 export class MainPageComponent implements OnInit {
   dish: string = '';
   recipe: Recipe;
+  displayRecipe: boolean = false;
   appComponent: typeof AppComponent;
 
   constructor(private recipeservice: RecipeService, private router: Router) {
@@ -23,13 +24,11 @@ export class MainPageComponent implements OnInit {
   submit() {
     this.recipeservice.submit(this.dish).subscribe({
       next: (recipe: Recipe) => {
-        this.router.navigate(['ingredients']).then(() => {
-          window.location.reload();
-        });
+        this.displayRecipe = true;
       },
     });
   }
-  submitManual(data: string){
+  submitManual(data: string) {
     this.dish = data;
     this.submit();
   }

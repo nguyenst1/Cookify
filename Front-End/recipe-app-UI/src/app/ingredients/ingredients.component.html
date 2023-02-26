@@ -1,1 +1,3 @@
-<p>ingredients works!</p>
+<div *ngFor="let ingredient of recipe.ingredients; let i = index">
+  <p>{{ i + 1 }}. {{ ingredient }}</p>
+</div>
