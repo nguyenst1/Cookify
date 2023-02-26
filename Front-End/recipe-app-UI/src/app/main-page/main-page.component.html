@@ -14,13 +14,26 @@
   <p>An AI recipes generator powered by ChatGPT and Dall-E</p>
 
   <div class="search-container">
-    <input type="text" style="width: 300px" [(ngModel)]="dish" placeholder="Search for any recipe..." required>
+    <input
+      type="text"
+      style="width: 300px"
+      [(ngModel)]="dish"
+      placeholder="Search for any recipe..."
+      required
+    />
     <ng-template [ngIf]="!isApiHit">
-      <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
-      </ng-template>
-      <ng-template [ngIf]="isApiHit">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="submit()"
+      >
+        Search
+      </button>
+    </ng-template>
+    <ng-template [ngIf]="isApiHit">
       <mat-spinner [diameter]="35"></mat-spinner>
-      </ng-template>
+    </ng-template>
   </div>
   <div class="search-container">
     <mat-form-field>
@@ -33,12 +46,10 @@
       />
     </mat-form-field>
   </div>
-  
 
- <app-daily-recipes *ngIf="isNotSearched"></app-daily-recipes>
-<!-- <app-instruction *ngIf="!isNotSearched"></app-instruction>-->
+  <app-daily-recipes *ngIf="isNotSearched"></app-daily-recipes>
+  <!-- <app-instruction *ngIf="!isNotSearched"></app-instruction>-->
 
-
-  <app-ingredients *ngIf="displayRecipe"></app-ingredients>
-  <app-instruction *ngIf="displayRecipe"></app-instruction>
+  <app-ingredients *ngIf="displayRecipe" [recipe]="recipe"></app-ingredients>
+  <app-instruction *ngIf="displayRecipe" [recipe]="recipe"></app-instruction>
 </body>

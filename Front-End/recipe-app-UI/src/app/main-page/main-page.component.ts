@@ -14,7 +14,7 @@ import { SessionService } from '../session.service';
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
-  public isLogIn: boolean| undefined;
+  public isLogIn: boolean | undefined;
   dish: string = '';
   recipe: Recipe;
   isNotSearched: boolean;
@@ -24,7 +24,13 @@ export class MainPageComponent implements OnInit {
   isApiHit: boolean = false;
   isRecipeValid: boolean = true;
 
-  constructor(private recipeservice: RecipeService, private router: Router,  private sessionService: SessionService, private recipeHttpService: RecipeHttp, private instructionService: InstructionService) {
+  constructor(
+    private recipeservice: RecipeService,
+    private router: Router,
+    private sessionService: SessionService,
+    private recipeHttpService: RecipeHttp,
+    private instructionService: InstructionService
+  ) {
     this.appComponent = AppComponent;
     this.recipe = {};
     this.isNotSearched = true;
@@ -38,21 +44,24 @@ export class MainPageComponent implements OnInit {
     this.isNotSearched = false;
     this.recipeHttpService.submit(this.dish, this.serving).subscribe({
       next: (recipe: any) => {
-          this.isRecipeValid = true;
-          this.displayRecipe = true;
-          this.isApiHit = false;
-          this.recipeservice.recipe = recipe;
-          // this.instructionService.getNextInstructionImageUrl();
+        this.recipe = recipe;
+        this.isRecipeValid = true;
+        this.displayRecipe = true;
+        this.isApiHit = false;
+        this.recipeservice.recipe = recipe;
       },
       error: (err: any) => {
-      if(err.status === 412 && err.error.error_code === "NOT_A_VALID_RECIPE"){
-        this.isRecipeValid = false;
-        this.isApiHit = false;
-      }
-      }
+        if (
+          err.status === 412 &&
+          err.error.error_code === 'NOT_A_VALID_RECIPE'
+        ) {
+          this.isRecipeValid = false;
+          this.isApiHit = false;
+        }
+      },
     });
   }
-  submitManual(data: string){
+  submitManual(data: string) {
     this.dish = data;
     this.submit();
   }
