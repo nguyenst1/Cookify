@@ -21,13 +21,13 @@ export class DailyRecipesComponent implements OnInit {
   ngOnInit(): void {
   }
   submit() {
-    this.recipeservice.submit(this.dish, 4).subscribe({
-      next: (recipe: Recipe) => {
-        this.router.navigate(['ingredients']).then(() => {
-          window.location.reload();
-        });
-      },
-    });
+    // this.recipeservice.submit(this.dish, 4).subscribe({
+    //   next: (recipe: Recipe) => {
+    //     this.router.navigate(['ingredients']).then(() => {
+    //       window.location.reload();
+    //     });
+    //   },
+    // });
   }
   submitManual(data: string){
     this.dish = data;
