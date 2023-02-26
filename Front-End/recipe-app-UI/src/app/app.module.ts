@@ -12,6 +12,9 @@ import { MaterialModule } from './material/material.module';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DailyRecipesComponent } from './daily-recipes/daily-recipes.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import { DailyRecipesComponent } from './daily-recipes/daily-recipes.component';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    NgbModule,
+    NgbCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],
