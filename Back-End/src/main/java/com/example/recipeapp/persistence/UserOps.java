@@ -2,9 +2,11 @@ package com.example.recipeapp.persistence;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.example.recipeapp.db_utils.UserUtils;
 
+@Component
 public class UserOps {
     private UserUtils userUtils;
 
