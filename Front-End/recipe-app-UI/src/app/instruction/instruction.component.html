@@ -2,31 +2,12 @@
   <h1>Instructions:</h1>
   <mat-card>
     <mat-card-content class="recipe-of-day">
-<!--      <ngb-carousel *ngIf="instruction">-->
-<!--        <ng-template ngbSlide *ngFor="let item of instruction">-->
-<!--          <img src="./assets/spaghetti_meatballs.jpeg" style="width: 300px; height: 200px;">-->
-<!--          <div class="carousel-caption">-->
-<!--            <h3>{{item.value}}</h3>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--      </ngb-carousel>-->
-
-
-<div>
-
-
-<img src="https://picsum.photos/id/944/900/500" />
-<div>{{currentInstruction}}</div>
-  <button mat-raised-button color="primary" (click)="previous()">Previous</button>
-  <button mat-raised-button color="primary" (click)="next()">Next</button>
-</div>
-
+      <img src="{{instructionImageUrl}}" />
+      <div>
+        <p> {{  currentInstruction }} </p>
+        <button mat-raised-button color="primary" (click)="previous()">Previous</button>
+        <button mat-raised-button color="primary" (click)="next()">Next</button>
+      </div>
     </mat-card-content>
   </mat-card>
-</div>
-
-
-
-<div *ngFor="let instruction of recipe.instructions; let i = index">
-  <p>{{ i + 1 }}. {{ instruction }}</p>
 </div>

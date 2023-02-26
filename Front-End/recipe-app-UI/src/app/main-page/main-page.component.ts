@@ -42,7 +42,7 @@ export class MainPageComponent implements OnInit {
           this.displayRecipe = true;
           this.isApiHit = false;
           this.recipeservice.recipe = recipe;
-          this.instructionService.getNextInstructionImageUrl();
+          // this.instructionService.getNextInstructionImageUrl();
       },
       error: (err: any) => {
       if(err.status === 412 && err.error.error_code === "NOT_A_VALID_RECIPE"){
