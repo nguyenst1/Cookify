@@ -89,7 +89,7 @@ public class UserUtils {
       criteria.append("username", username);
     }
     if(password != null && password.trim() != ""){
-      criteria.append("password", password);
+      criteria.append("password", passwordEncrypter.encrypt(password));
     }
     FindIterable<Document> iterDoc = collection.find(criteria);
     Iterator<Document> it = iterDoc.iterator();

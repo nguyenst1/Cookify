@@ -1,5 +1,7 @@
 package com.example.recipeapp.controller;
 
+import java.util.HashMap;
+
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +34,12 @@ public class RecipeController {
 
     @GetMapping("/recipe")
     public ResponseEntity<String> getRecipe(@RequestParam("food_item") String foodItem,
-            @RequestParam(value = "food_servings", required = false) Integer servings) throws Exception {
+            @RequestParam(value = "food_servings", required = false) Integer servings,
+            @RequestHeader Object userId) throws Exception {
+        if(!userOps.isUserExists(userId.toString())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        
         if (servings == null) {
             servings = 1;
         }
@@ -44,40 +52,46 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/instruction/image")
-    public ResponseEntity<String> getRecipeImage(@RequestParam("food_instruction") String foodInstruction)
+    public ResponseEntity<String> getRecipeImage(@RequestParam("food_instruction") String foodInstruction, @RequestHeader Object userId)
             throws Exception {
+        if(!userOps.isUserExists(userId.toString())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         return new ResponseEntity<>(recipeOps.getImage(foodInstruction).toString(), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody JSONObject credentials) throws Exception{
-        if(!(credentials.has("email") && credentials.has("password")) && (credentials.has("username"))){
+    public ResponseEntity<String> registerUser(@RequestBody HashMap<String, String> credentials) throws Exception{
+        if(!(credentials.containsKey("email") && credentials.containsKey("password")) && (credentials.containsKey("username"))){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         
-        JSONObject userData = userOps.registerUser(credentials.getString("email"), credentials.getString("username"), credentials.getString("password"));
+        JSONObject userData = userOps.registerUser(credentials.get("email"), credentials.get("username"), credentials.get("password"));
         return new ResponseEntity<>(userData.toString(), HttpStatus.CREATED);
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticateUser(@RequestBody JSONObject credentials){
-        if(!credentials.has("password") && !(credentials.has("username") || credentials.has("email"))){
+    public ResponseEntity<String> authenticateUser(@RequestBody HashMap<String, String> credentials){
+        if(!credentials.containsKey("password") && !(credentials.containsKey("username") || credentials.containsKey("email"))){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         
         Boolean isAuthenticated = false;
         String userId = "";
-        if(credentials.has("username")){
-            isAuthenticated = userOps.authenticateUser(credentials.getString("username"), credentials.getString("password"), false);
+        String username = "";
+        if(credentials.containsKey("username")){
+            isAuthenticated = userOps.authenticateUser(credentials.get("username"), credentials.get("password"), false);
             if(isAuthenticated){
-                userId = userOps.getUserId(credentials.getString("username"), false);
+                userId = userOps.getUserId(credentials.get("username"), false);
+                username = userOps.getUserName(credentials.get("username"), false);
             }
-        }else  if(credentials.has("email")){
-            isAuthenticated = userOps.authenticateUser(credentials.getString("email"), credentials.getString("password"), true);
+        }else  if(credentials.containsKey("email")){
+            isAuthenticated = userOps.authenticateUser(credentials.get("email"), credentials.get("password"), true);
             if(isAuthenticated){
-                userId = userOps.getUserId(credentials.getString("email"), true);
+                userId = userOps.getUserId(credentials.get("email"), true);
+                username = userOps.getUserName(credentials.get("username"), false);
             }
         }
-        return isAuthenticated ? new ResponseEntity<>(new JSONObject().put("user_id", userId).toString() ,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return isAuthenticated ? new ResponseEntity<>(new JSONObject().put("user_id", userId).put("username", username).toString() ,HttpStatus.OK) : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

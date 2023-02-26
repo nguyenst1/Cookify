@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session.service';
 import { AppComponent } from '../app.component';
 import { RecipeHttp } from '../recipeHttp';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,16 @@ import { RecipeHttp } from '../recipeHttp';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
-  message: string = '';
+  // username: string = '';
+  // password: string = '';
+  message: String = '';
+  form: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+    email: new FormControl(''),
+  });
+  isRegister: Boolean = false;
+  isSubmitDisable: Boolean = true;
   public userDetails: any;
   appComponent: typeof AppComponent;
 
@@ -29,11 +37,18 @@ export class LoginComponent implements OnInit {
     //does nothing on initialization
   }
 
+  processLoginOrRegister(){
+    if(this.isRegister){
+      this.register();
+    }else{
+      this.login();
+    }
+  }
   login() {
     this.message = '';
-    if (this.username.trim() !== '' && this.password.trim() !== '') {
+    if (this.form.controls["username"].value.trim() !== '' && this.form.controls["password"].value.trim() !== '') {
       this.recipeHttp
-        .authenticateUser(this.username, this.password)
+        .authenticateUser(this.form.controls["username"].value.trim(), this.form.controls["password"].value.trim())
         .subscribe({
           next: (userDetails: any) => {
             console.log(userDetails);
@@ -45,20 +60,46 @@ export class LoginComponent implements OnInit {
               this.message = 'Credentials not matched';
             } else {
               this.sessionService.logIn(
-                userDetails.user_data.username,
-                userDetails.user_data.id
+                userDetails.username,
+                userDetails.user_id
               );
-              this.router.navigate(['home']).then(() => {
-                window.location.reload();
-              });
+              this.router.navigateByUrl('home');
             }
           },
         });
     }
   }
-  cancel() {
-    this.router.navigate(['home']).then(() => {
-      window.location.reload();
-    });
+  register() {
+    this.message = '';
+    if (this.form.controls["username"].value.trim() !== '' && this.form.controls["email"].value.trim() !== '' && this.form.controls["password"].value.trim() !== '') {
+      this.recipeHttp
+        .registerUser(this.form.controls["username"].value.trim(), this.form.controls["email"].value.trim(), this.form.controls["password"].value.trim())
+        .subscribe({
+          next: (userDetails: any) => {
+            if (
+              userDetails.hasOwnProperty('status') &&
+              userDetails.status == 'failure'
+            ) {
+              this.message = 'Email or UserName Already Exists';
+            } else {
+              alert("User Registered! Kindly Login Now");
+              this.changeToLogin();
+            }
+          },
+        });
+    }
+  }
+  changeToRegister(){
+    this.isRegister = true;
+  }
+  changeToLogin(){
+    this.isRegister = false;
+  }
+
+  checkForm(): any{
+    if (this.form.controls["username"].value.trim() !== '' && this.form.controls["password"].value.trim() !== '' && (!this.isRegister || (this.isRegister && this.form.controls["email"].value.trim() !== ''))) {
+      return null;
+    }
+    return true;
   }
 }

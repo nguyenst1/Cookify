@@ -2,17 +2,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { RecipeService } from './recipe.service';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeHttp {
   private url = 'http://localhost:8080/';
-  constructor(private http: HttpClient, private recipeService: RecipeService) {
+  constructor(private http: HttpClient, private recipeService: RecipeService, private sessionService: SessionService) {
   }
 
   public getHeaders(): any {
     return new HttpHeaders({
+      userId: this.sessionService.getUserId(),
       "Access-Control-Allow-Origin": "http://localhost:4200"
       
     });
@@ -39,6 +41,16 @@ export class RecipeHttp {
   authenticateUser(username: string, password: string): any {
     const body = { username: username, password: password };
     return this.http.post<any>(this.url + 'authenticate', body).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleUserError<any>({ status: 'failure' }))
+    );
+  }
+
+  registerUser(username: string, email: string, password: string): any {
+    const body = { username: username, email: email, password: password };
+    return this.http.post<any>(this.url + 'register', body).pipe(
       map((response) => {
         return response;
       }),

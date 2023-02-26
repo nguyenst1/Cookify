@@ -14,8 +14,8 @@ export class SessionService {
     localStorage.removeItem('user_id');
   }
 
-  get(key: string): any {
-    return localStorage.getItem(key);
+  getUserId(): any {
+    return localStorage.getItem('user_id');
   }
 
   getUserName(): any {

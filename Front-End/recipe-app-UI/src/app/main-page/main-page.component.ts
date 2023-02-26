@@ -23,13 +23,14 @@ export class MainPageComponent implements OnInit {
   serving: number = 4;
   isApiHit: boolean = false;
   isRecipeValid: boolean = true;
+  userName: String = "";
 
   constructor(
     private recipeservice: RecipeService,
     private router: Router,
     private sessionService: SessionService,
     private recipeHttpService: RecipeHttp,
-    private instructionService: InstructionService
+    private instructionService: InstructionService,
   ) {
     this.appComponent = AppComponent;
     this.recipe = {};
@@ -38,6 +39,11 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogIn = this.sessionService.getIsLogIn();
+    debugger;
+    if(!this.isLogIn){
+      this.router.navigateByUrl('login');
+    }
+    this.userName = this.sessionService.getUserName();
   }
   submit() {
     this.isApiHit = true;
@@ -64,5 +70,9 @@ export class MainPageComponent implements OnInit {
   submitManual(data: string) {
     this.dish = data;
     this.submit();
+  }
+  logOut(){
+    this.sessionService.logOut();
+    this.router.navigateByUrl('login');
   }
 }
