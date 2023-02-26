@@ -35,6 +35,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     //does nothing on initialization
+    if(this.sessionService.getIsLogIn()){
+      this.router.navigateByUrl('home');
+    }
   }
 
   processLoginOrRegister(){

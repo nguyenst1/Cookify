@@ -45,7 +45,6 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogIn = this.sessionService.getIsLogIn();
-    debugger;
     if(!this.isLogIn){
       this.router.navigateByUrl('login');
     }
