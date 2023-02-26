@@ -1,3 +1,14 @@
+<head>
+  <button
+    mat-icon-button
+    class="example-icon"
+    *ngIf="!isLogIn"
+    routerLink="/login"
+    title="Login"
+  >
+    <mat-icon>login</mat-icon>
+  </button>
+</head>
 <body>
   <h1 class="cookify_title">Cookify</h1>
   <p>An AI recipes generator powered by ChatGPT and Dall-E</p>
