@@ -40,7 +40,7 @@ export class InstructionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRecipe();
+    this.getRecipe(); // TODO
   }
 
   getRecipe() {
