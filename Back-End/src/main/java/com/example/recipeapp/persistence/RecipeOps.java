@@ -73,7 +73,11 @@ public class RecipeOps {
         LOG.info("confirmation ::: " + response);
         LOG.info("confirmation Boolean 1 ::: " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim());
         LOG.info("confirmation Boolean 2 ::: " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().equalsIgnoreCase("yes"));
-       
+        LOG.info("Image Response is -- " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text"));
+        LOG.info("Image Response is -- " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim());
+        LOG.info("Image Response is -- " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().toLowerCase());
+        LOG.info("Image Response is -- " + new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().toLowerCase().equals("yes"));
+        LOG.info("Image Response is -- " + Boolean.valueOf(new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().toLowerCase().equals("yes")));
         LOG.info("confirmation Boolean 3 ::: " + Boolean.valueOf(new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().equalsIgnoreCase("yes")));
         return Boolean.valueOf(new JSONObject(response).getJSONArray("choices").getJSONObject(0).getString("text").trim().toLowerCase().contains("yes"));
     }
