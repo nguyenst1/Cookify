@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
-import { RecipeserviceService } from '../recipeservice.service';
 
 @Component({
   selector: 'app-ingredients',
@@ -11,7 +10,7 @@ import { RecipeserviceService } from '../recipeservice.service';
 export class IngredientsComponent implements OnInit {
   recipe: Recipe;
 
-  constructor(private recipeservice: RecipeserviceService) {
+  constructor(private recipeService: RecipeService) {
     this.recipe = {};
   }
 
@@ -20,6 +19,6 @@ export class IngredientsComponent implements OnInit {
   }
 
   getRecipe(): void {
-    this.recipe = this.recipeservice.getRecipe();
+    this.recipe = this.recipeService.getrecipe();
   }
 }

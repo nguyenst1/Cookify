@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { RecipeService } from './recipe.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeHttp {
   private url = 'http://localhost:8080/';
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private recipeService: RecipeService) {
   }
 
   public getHeaders(): any {
@@ -17,9 +18,10 @@ export class RecipeHttp {
     });
   }
 
-  submit(dish: string): Observable<any> {
-    return this.http.get<any>(this.url + 'recipe' + "?&food_item=" + dish, { headers: this.getHeaders() }).pipe(
+  submit(dish: string, serving: number): Observable<any> {
+    return this.http.get<any>(this.url + 'recipe' + "?&food_item=" + dish + "&serving=" + serving, { headers: this.getHeaders() }).pipe(
       map((response) => {
+        this.recipeService.setRecipe(response);
         return response;
       }),
       catchError(this.handleError)
@@ -32,6 +34,22 @@ export class RecipeHttp {
         return response;
       })
     );
+  }
+
+  authenticateUser(username: string, password: string): any {
+    const body = { username: username, password: password };
+    return this.http.post<any>(this.url + 'authenticate', body).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleUserError<any>({ status: 'failure' }))
+    );
+  }
+
+  public handleUserError<T>(result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
   }
 
   handleError(error: any): Observable<Response> {

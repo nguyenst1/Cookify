@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session.service';
 import { AppComponent } from '../app.component';
-import { RecipeService } from '../recipe.service';
+import { RecipeHttp } from '../recipeHttp';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   appComponent: typeof AppComponent;
 
   constructor(
-    private recipeService: RecipeService,
+    private recipeHttp: RecipeHttp,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.message = '';
     if (this.username.trim() !== '' && this.password.trim() !== '') {
-      this.recipeService
+      this.recipeHttp
         .authenticateUser(this.username, this.password)
         .subscribe({
           next: (userDetails: any) => {
