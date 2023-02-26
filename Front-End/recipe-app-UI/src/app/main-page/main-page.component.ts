@@ -74,11 +74,24 @@ export class MainPageComponent implements OnInit {
     });
   }
   submitManual(data: string) {
+    debugger;
     this.dish = data;
     this.submit();
+  }
+
+  submitManualFromChild(): MainComponentApi {
+    return {
+      callParentMethod: (recipe) => {
+        this.submitManual(recipe)
+      }
+    }
   }
   logOut(){
     this.sessionService.logOut();
     this.router.navigateByUrl('login');
   }
+}
+
+export interface MainComponentApi {
+  callParentMethod: (recipe: string) => void
 }

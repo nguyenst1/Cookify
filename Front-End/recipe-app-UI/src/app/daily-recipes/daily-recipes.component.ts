@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Recipe} from "../recipe";
 import {RecipeService} from "../recipe.service";
 import {Router} from "@angular/router";
 import {AppComponent} from "../app.component";
+import { MainComponentApi } from '../main-page/main-page.component';
 
 @Component({
   selector: 'app-daily-recipes',
@@ -13,6 +14,7 @@ export class DailyRecipesComponent implements OnInit {
   dish: string = '';
   recipe: Recipe;
   appComponent: typeof AppComponent;
+  @Input() parentApi!: MainComponentApi
 
   constructor(private recipeservice: RecipeService, private router: Router) {
     this.appComponent = AppComponent;
@@ -30,8 +32,7 @@ export class DailyRecipesComponent implements OnInit {
     // });
   }
   submitManual(data: string){
-    this.dish = data;
-    this.submit();
+    this.parentApi.callParentMethod(data);
   }
 
 }

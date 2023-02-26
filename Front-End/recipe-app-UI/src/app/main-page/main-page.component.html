@@ -39,7 +39,7 @@
     </mat-form-field>
   </div>
 
-  <app-daily-recipes *ngIf="isNotSearched"></app-daily-recipes>
+  <app-daily-recipes [parentApi]="submitManualFromChild()" *ngIf="isNotSearched"></app-daily-recipes>
   <app-ingredients *ngIf="displayRecipe" [recipe]="recipe"></app-ingredients>
   <app-instruction *ngIf="displayRecipe" [recipe]="recipe"></app-instruction>
 </body>
