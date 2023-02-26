@@ -24,12 +24,12 @@ export class MainPageComponent implements OnInit {
   serving: number = 4;
   isApiHit: boolean = false;
   isRecipeValid: boolean = true;
-  userName: String = "";
-  instructionComp:any;
+  userName: String = '';
+  instructionComp: any;
   @ViewChild(InstructionComponent)
   set setInstructionComp(instructionComp: InstructionComponent) {
     this.instructionComp = instructionComp;
-  };
+  }
 
   constructor(
     private recipeservice: RecipeService,
@@ -45,7 +45,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogIn = this.sessionService.getIsLogIn();
-    if(!this.isLogIn){
+    if (!this.isLogIn) {
       this.router.navigateByUrl('login');
     }
     this.userName = this.sessionService.getUserName();
@@ -74,7 +74,6 @@ export class MainPageComponent implements OnInit {
     });
   }
   submitManual(data: string) {
-    debugger;
     this.dish = data;
     this.submit();
   }
@@ -82,16 +81,16 @@ export class MainPageComponent implements OnInit {
   submitManualFromChild(): MainComponentApi {
     return {
       callParentMethod: (recipe) => {
-        this.submitManual(recipe)
-      }
-    }
+        this.submitManual(recipe);
+      },
+    };
   }
-  logOut(){
+  logOut() {
     this.sessionService.logOut();
     this.router.navigateByUrl('login');
   }
 }
 
 export interface MainComponentApi {
-  callParentMethod: (recipe: string) => void
+  callParentMethod: (recipe: string) => void;
 }
