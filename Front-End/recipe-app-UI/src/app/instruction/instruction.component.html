@@ -27,3 +27,6 @@
 
 
 
+<div *ngFor="let instruction of recipe.instructions; let i = index">
+  <p>{{ i + 1 }}. {{ instruction }}</p>
+</div>

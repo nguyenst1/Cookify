@@ -1,12 +1,32 @@
+<head>
+  <button
+    mat-icon-button
+    class="example-icon"
+    *ngIf="!isLogIn"
+    routerLink="/login"
+    title="Login"
+  >
+    <mat-icon>login</mat-icon>
+  </button>
+</head>
 <body>
   <h1 class="cookify_title">Cookify</h1>
-  <p>
-    An AI recipes generator powered by ChatGPT and Dall-E
-  </p>
+  <p>An AI recipes generator powered by ChatGPT and Dall-E</p>
 
   <div class="search-container">
     <input type="text" style="width: 300px" [(ngModel)]="dish" placeholder="Search for any recipe..." required>
     <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
+  </div>
+  <div class="search-container">
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="Serving size"
+        [(ngModel)]="serving"
+        min="1"
+      />
+    </mat-form-field>
   </div>
 
  <app-daily-recipes *ngIf="isNotSearched"></app-daily-recipes>
@@ -14,3 +34,6 @@
 </body>
 
 
+  <app-ingredients *ngIf="displayRecipe"></app-ingredients>
+  <app-instruction *ngIf="displayRecipe"></app-instruction>
+</body>

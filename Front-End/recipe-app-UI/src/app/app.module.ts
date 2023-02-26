@@ -15,7 +15,7 @@ import { DailyRecipesComponent } from './daily-recipes/daily-recipes.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import * as $ from 'jquery';
-
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import * as $ from 'jquery';
     InstructionComponent,
     IngredientsComponent,
     DailyRecipesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

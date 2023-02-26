@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from '../recipe';
+import { RecipeserviceService } from '../recipeservice.service';
 
 
 @Component({
@@ -10,8 +12,9 @@ export class InstructionComponent implements OnInit {
   instruction: any[];
   currentInstruction: any;
   currentIndex: number = 0;
+  recipe: Recipe;
 
-  constructor() {
+  constructor(private recipeService: RecipeserviceService) {
     this.instruction = [
       "Preheat oven to 425 degrees Fahrenheit.",
       "Place the pizza dough on a greased baking sheet and use a rolling pin to flatten the dough evenly.",
@@ -22,10 +25,7 @@ export class InstructionComponent implements OnInit {
       "You can use store-bought pizza dough, or use your own favorite homemade recipe."
     ]
     this.currentInstruction = this.instruction[0];
-  }
-
-  ngOnInit(): void{
-
+    this.recipe = {};
   }
 
   next(): void{
@@ -45,5 +45,11 @@ export class InstructionComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {
+    this.getRecipe();
+  }
 
+  getRecipe() {
+    this.recipe = this.recipeService.getRecipe();
+  }
 }
