@@ -23,9 +23,9 @@ export class RecipeService {
     });
   }
 
-  submit(dish: string): Observable<any> {
+  submit(dish: string, serving: number): Observable<any> {
     return this.http
-      .get<any>(this.url + 'recipe' + '?&food_item=' + dish, {
+      .get<any>(this.url + 'recipe' + '?&food_item=' + dish + serving, {
         headers: this.getHeaders(),
       })
       .pipe(

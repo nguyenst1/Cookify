@@ -14,6 +14,7 @@ export class MainPageComponent implements OnInit {
   recipe: Recipe;
   displayRecipe: boolean = false;
   appComponent: typeof AppComponent;
+  serving: number = 4;
 
   constructor(private recipeservice: RecipeService, private router: Router) {
     this.appComponent = AppComponent;
@@ -22,7 +23,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {}
   submit() {
-    this.recipeservice.submit(this.dish).subscribe({
+    this.recipeservice.submit(this.dish, this.serving).subscribe({
       next: (recipe: Recipe) => {
         this.displayRecipe = true;
       },

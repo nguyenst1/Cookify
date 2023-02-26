@@ -7,6 +7,15 @@
     <button mat-raised-button color="primary" type="submit" (click)="submit()">
       Search
     </button>
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="Serving size"
+        [(ngModel)]="serving"
+        min="1"
+      />
+    </mat-form-field>
   </div>
 
   <app-ingredients *ngIf="displayRecipe"></app-ingredients>
