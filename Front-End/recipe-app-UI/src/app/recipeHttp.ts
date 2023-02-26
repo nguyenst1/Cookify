@@ -21,7 +21,7 @@ export class RecipeHttp {
   }
 
   submit(dish: string, serving: number): Observable<any> {
-    return this.http.get<any>(this.url + 'recipe' + "?&food_item=" + dish + "&serving=" + serving, { headers: this.getHeaders() }).pipe(
+    return this.http.get<any>(this.url + 'recipe' + "?&food_item=" + dish + "&food_servings=" + serving, { headers: this.getHeaders() }).pipe(
       map((response) => {
         this.recipeService.setRecipe(response);
         return response;
