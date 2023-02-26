@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DailyRecipesComponent } from './daily-recipes/daily-recipes.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import * as $ from 'jquery';
 
 
 @NgModule({
