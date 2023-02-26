@@ -28,15 +28,17 @@ export class MainPageComponent implements OnInit {
     this.isApiHit = true;
     this.recipeHttpService.submit(this.dish).subscribe({
       next: (recipe: any) => {
-        debugger;
-        if(recipe.error_code != undefined && recipe.error_code === "NOT_A_VALID_RECIPE"){
-          this.isRecipeValid = false;
-        }else{
           this.isRecipeValid = true;
+          this.isApiHit = false;
           this.recipeservice.recipe = recipe;
           this.recipeservice.getNextInstructionImageUrl();
-        }
       },
+      error: (err) => {
+      if(err.status === 412 && err.error.error_code === "NOT_A_VALID_RECIPE"){
+        this.isRecipeValid = false;
+        this.isApiHit = false;
+      }
+      }
     });
   }
   submitManual(data: string){

@@ -6,7 +6,6 @@
 
   <div class="search-container">
     <input type="text" [(ngModel)]="dish" required />
-    <mat-error *ngIf="!isRecipeValid">Enter a Valid Recipe</mat-error>
     <ng-template [ngIf]="!isApiHit">
       <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
       </ng-template>
@@ -14,7 +13,7 @@
       <mat-spinner [diameter]="35"></mat-spinner>
       </ng-template>
   </div>
-
+  
   <div class="recipe-of-day">
     <h1>Recipes of the day:</h1>
     <mat-card>
