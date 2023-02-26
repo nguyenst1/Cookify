@@ -6,6 +6,7 @@
 
   <div class="search-container">
     <input type="text" [(ngModel)]="dish" required />
+    <mat-error *ngIf="!isRecipeValid">Enter a Valid Recipe</mat-error>
     <ng-template [ngIf]="!isApiHit">
       <button mat-raised-button color="primary" type="submit" (click)="submit()">Search</button>
       </ng-template>

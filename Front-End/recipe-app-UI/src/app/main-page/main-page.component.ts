@@ -16,6 +16,7 @@ export class MainPageComponent implements OnInit {
   appComponent: typeof AppComponent;
   isApiHit: Boolean = false;
   url: any;
+  isRecipeValid: Boolean = true;
 
   constructor(private recipeservice: RecipeService, private recipeHttpService: RecipeHttp, private router: Router) {
     this.appComponent = AppComponent;
@@ -26,9 +27,15 @@ export class MainPageComponent implements OnInit {
   submit() {
     this.isApiHit = true;
     this.recipeHttpService.submit(this.dish).subscribe({
-      next: (recipe: Recipe) => {
-        this.recipeservice.recipe = recipe;
-        this.recipeservice.getNextInstructionImageUrl();
+      next: (recipe: any) => {
+        debugger;
+        if(recipe.error_code != undefined && recipe.error_code === "NOT_A_VALID_RECIPE"){
+          this.isRecipeValid = false;
+        }else{
+          this.isRecipeValid = true;
+          this.recipeservice.recipe = recipe;
+          this.recipeservice.getNextInstructionImageUrl();
+        }
       },
     });
   }

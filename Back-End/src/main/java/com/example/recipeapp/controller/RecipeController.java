@@ -34,7 +34,12 @@ public class RecipeController {
         if (servings == null) {
             servings = 1;
         }
-        return new ResponseEntity<>(recipeOps.getRecipe(foodItem, servings).toString(), HttpStatus.OK);
+        JSONObject response =recipeOps.getRecipe(foodItem, servings);
+        if(response.has("error_code")){
+            return new ResponseEntity<>(response.toString(), HttpStatus.PRECONDITION_FAILED);
+        }else{
+            return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/recipe/instruction/image")
