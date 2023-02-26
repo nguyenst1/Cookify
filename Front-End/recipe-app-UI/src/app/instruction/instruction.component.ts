@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstructionComponent implements OnInit {
   instruction: any[];
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   currentInstruction: any;
   currentIndex: number = 0;
 
@@ -26,7 +25,7 @@ export class InstructionComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    
+
   }
 
   next(): void{
