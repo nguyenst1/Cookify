@@ -1,7 +1,7 @@
 <div class="instruction">
   <h1>Instructions:</h1>
   <mat-card>
-    <mat-card-content class="recipe-of-day">
+    <mat-card-content *ngIf="!isInstructionAPIOnGng" class="recipe-of-day">
       <img src="{{instructionImageUrl}}" />
       <div>
         <p> {{  currentInstruction }} </p>
@@ -9,5 +9,6 @@
         <button mat-raised-button color="primary" (click)="next()">Next</button>
       </div>
     </mat-card-content>
+    <mat-spinner *ngIf="isInstructionAPIOnGng" [diameter]="50"></mat-spinner>
   </mat-card>
 </div>

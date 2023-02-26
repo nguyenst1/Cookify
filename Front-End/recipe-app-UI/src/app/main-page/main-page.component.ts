@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { InstructionService } from '../instruction.service';
+import { InstructionComponent } from '../instruction/instruction.component';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 import { RecipeHttp } from '../recipeHttp';
@@ -24,13 +25,15 @@ export class MainPageComponent implements OnInit {
   isApiHit: boolean = false;
   isRecipeValid: boolean = true;
   userName: String = "";
+  @ViewChild(InstructionComponent, { static: true })
+  instructionComp!: InstructionComponent;
 
   constructor(
     private recipeservice: RecipeService,
     private router: Router,
     private sessionService: SessionService,
     private recipeHttpService: RecipeHttp,
-    private instructionService: InstructionService,
+    private instructionService: InstructionService
   ) {
     this.appComponent = AppComponent;
     this.recipe = {};
@@ -55,6 +58,7 @@ export class MainPageComponent implements OnInit {
         this.displayRecipe = true;
         this.isApiHit = false;
         this.recipeservice.recipe = recipe;
+        //this.instructionComp.getRecipe();
       },
       error: (err: any) => {
         if (

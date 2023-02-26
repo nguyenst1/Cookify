@@ -10,11 +10,21 @@ import {RecipeHttp} from "../recipeHttp";
   styleUrls: ['./instruction.component.css'],
 })
 export class InstructionComponent implements OnInit {
+  // private _recipe!: Recipe;
+  // @Input('recipe')
+  // set recipe(recipe: Recipe) {
+  //   if(recipe === undefined || Object.keys(recipe).length === 0){
+  //     this.getRecipe();
+  //   }
+  // }
+
+  // get recipe(): Recipe { return this._recipe; }
   @Input() recipe: Recipe;
   instruction: any[];
   currentInstruction: any;
   currentIndex: number = 0;
   instructionImageUrl: any;
+  isInstructionAPIOnGng: Boolean = false;
 
   constructor(private recipeService: RecipeService,  private recipeHttp: RecipeHttp) {
     this.recipe = {};
@@ -40,10 +50,10 @@ export class InstructionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRecipe(); // TODO
+     this.getRecipe(); // TODO
   }
 
-  getRecipe() {
+  public getRecipe() {
     this.recipe = this.recipeService.getrecipe();
     this.recipe.instructions?.forEach(i => {
       this.instruction.push(i);
@@ -54,8 +64,10 @@ export class InstructionComponent implements OnInit {
   }
 
   getInstructionUrl(){
+    this.isInstructionAPIOnGng = true;
     this.recipeHttp.getImage(this.currentInstruction).subscribe((nextInstruction) => {
       this.instructionImageUrl = nextInstruction.url;
+      this.isInstructionAPIOnGng = false;
     });
   }
 }
