@@ -21,7 +21,7 @@ export class DailyRecipesComponent implements OnInit {
   ngOnInit(): void {
   }
   submit() {
-    this.recipeservice.submit(this.dish).subscribe({
+    this.recipeservice.submit(this.dish, 4).subscribe({
       next: (recipe: Recipe) => {
         this.router.navigate(['ingredients']).then(() => {
           window.location.reload();
