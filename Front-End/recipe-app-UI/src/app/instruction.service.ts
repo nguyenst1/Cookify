@@ -13,7 +13,7 @@ export class InstructionService {
   }
 
   getInstructionImageUrl(instruction: String)  : any {
-    this.recipeHttp.getImage(instruction).subscribe((nextInstruction) => {
+    return this.recipeHttp.getImage(instruction).subscribe((nextInstruction) => {
       return nextInstruction.url;
     });
   }

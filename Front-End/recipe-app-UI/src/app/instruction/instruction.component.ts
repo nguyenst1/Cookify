@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
 import {InstructionService} from "../instruction.service";
+import {RecipeHttp} from "../recipeHttp";
 
 @Component({
   selector: 'app-instruction',
@@ -15,7 +16,7 @@ export class InstructionComponent implements OnInit {
   currentIndex: number = 0;
   instructionImageUrl: any;
 
-  constructor(private recipeService: RecipeService, public instructionService: InstructionService) {
+  constructor(private recipeService: RecipeService,  private recipeHttp: RecipeHttp) {
     this.recipe = {};
     this.instruction = [];
   }
@@ -25,7 +26,7 @@ export class InstructionComponent implements OnInit {
     } else {
       this.currentIndex++;
       this.currentInstruction = this.instruction[this.currentIndex];
-      this.instructionImageUrl = this.instructionService.getInstructionImageUrl(this.currentInstruction)
+      this.instructionImageUrl = this.getInstructionUrl()
 
     }
   }
@@ -34,7 +35,7 @@ export class InstructionComponent implements OnInit {
     } else {
       this.currentIndex--;
       this.currentInstruction = this.instruction[this.currentIndex];
-      this.instructionImageUrl = this.instructionService.getInstructionImageUrl(this.currentInstruction)
+      this.instructionImageUrl = this.getInstructionUrl()
     }
   }
 
@@ -48,11 +49,13 @@ export class InstructionComponent implements OnInit {
       this.instruction.push(i);
     })
     this.currentInstruction = this.instruction[0];
-    this.instructionService.getInstructionImageUrl(this.currentInstruction).subscribe({
-      next: (imageUrl: any) => {
-        this.instructionImageUrl = imageUrl;
-      }
-    })
+    this.getInstructionUrl();
 
+  }
+
+  getInstructionUrl(){
+    this.recipeHttp.getImage(this.currentInstruction).subscribe((nextInstruction) => {
+      this.instructionImageUrl = nextInstruction.url;
+    });
   }
 }
