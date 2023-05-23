@@ -36,3 +36,20 @@ To install and run Cookify on your local machine, follow these steps:
 
    ```shell
    git clone https://github.com/your-username/cookify.git
+   
+2. Navigate to the project directory:
+
+   ```shell
+   cd cookify
+
+3. Install the necessary dependencies:
+
+   ```shell
+   npm install
+
+4. Start the Angular development server:
+
+   ```shell
+   ng serve
+   
+5. Open your web browser and visit **http://localhost:4200** to access Cookify.
